@@ -1,0 +1,14 @@
+.left {
+    width: 30%;
+    text-align: right;
+}
+.right {
+    width: 65%;
+    margin-left: 10px;
+}
+body{
+	background-color: lightblue;
+}
+#signup {
+	
+}

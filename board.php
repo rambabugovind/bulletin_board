@@ -9,8 +9,9 @@ if(isset($_POST['logout']))
 	session_destroy();
 	header("Location:login.php");
 }
-error_reporting(E_ALL);
-ini_set('display_errors','On');
+error_reporting(0);
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
 
 echo'<html><head><title>Message Board</title></head>
 <body>
@@ -51,7 +52,7 @@ elseif(isset($_POST['reply']) && $_POST['txtarea']!='')
 }
 else
 {
-	echo '<p>Text Area cant be empty</p>';
+	echo '<p><b>ERROR:</b> Text Area cant be empty</p>';
 }
 try {
   $stmt = $dbi->prepare('select posts.id, posts.postedby, users.fullname, posts.datetime, posts.replyto, posts.message from posts join users on posts.postedby=users.username order by datetime DESC');
@@ -62,12 +63,12 @@ try {
 	 //print_r ($row);
 	 if($row['replyto']!='')
 	 {
-		 echo '<fieldset><legend> Reply to Msg ID: '.$row['replyto'].' by 	'.$row['fullname'].' "aka" '.$row['postedby'].' at '.$row['datetime'].'</legend>Message ID: '.$row['id'].'<br/>'.$row['message'].'<br/>
+		 echo '<fieldset><legend> <b>Reply</b> to Msg ID: '.$row['replyto'].' by 	<b>'.$row['fullname'].' "</b>aka" '.$row['postedby'].' at '.$row['datetime'].'</legend><pre>Message ID: '.$row['id'].'</pre><i>'.$row['message'].'</i><br/>
 	 <button type="submit" name="reply" value="'.$row['id'].'" form="form1" formaction="board.php?replyto='.$row['id'].'">Reply</button></fieldset>';
 	 }
 	 else
 	 {
-		 echo '<fieldset><legend>'.$row['fullname'].' "aka" '.$row['postedby'].' at '.$row['datetime'].'</legend>Message ID: '.$row['id'].'<br/>'.$row['message'].'<br/>
+		 echo '<fieldset><legend><b>'.$row['fullname'].' "</b>aka" '.$row['postedby'].' at '.$row['datetime'].'</legend><pre>Message ID: '.$row['id'].'</pre><i>'.$row['message'].'</i><br/>
 	 <button type="submit" name="reply" value="'.$row['id'].'" form="form1" formaction="board.php?replyto='.$row['id'].'">Reply</button></fieldset>';
 	 }	 
   }
